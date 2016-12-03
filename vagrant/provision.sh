@@ -42,12 +42,18 @@ if $php; then
     fi
 fi
 
-# Install Ruby
+ Install Ruby
 if $ruby; then
     box_install_ruby
 fi
 
+
+box_create_dirs
+box_add_vagrant_to_staff_group
+box_install_rocketeer
+
 # Register the box
 box_register
+
 
 output $GREEN "Box provisioned."

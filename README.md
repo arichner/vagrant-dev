@@ -33,3 +33,10 @@ etc.
 
 All configuration files are available within ```vagrant/env``` and can be configured
 to your individual project requirements.
+
+## todo ##
+
+what's left?
+
+* ssh keygen stuff for github
+* synced folders for dev folder

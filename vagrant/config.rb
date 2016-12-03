@@ -9,7 +9,7 @@ module VConfig
       box_ram:          '1024', # Amount of RAM in (MB) for this machine
 
       # Web
-      web_service:      'nginx', # nginx|apache2
+      web_service:      'apache2', # nginx|apache2
       web_port:         8080, # HTTP port forwards to this
       web_logs_dir:     '/vagrant/logs', # Server side path to logs
       web_root_dir:     '/vagrant/public', # Local side path to the project content
@@ -21,10 +21,10 @@ module VConfig
       # PHP
       php:              true, # Should the PHP be installed?
       php_composer:     true, # Would you like to install composer globally?
-      memcached:        false, # Would you like to install and set up Memcached?
+      memcached:        true, # Would you like to install and set up Memcached?
 
       # Ruby
-      ruby:             false, # Should Ruby be installed?
+      ruby:             true, # Should Ruby be installed?
   }
 
 end

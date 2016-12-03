@@ -27,6 +27,22 @@ box_install_apache2() {
     output $GREEN "Apache installed and configured."
 }
 
+#box_create_dirs() {
+#  mkdir /usr/local/share/itss-dev/
+#  chmod 775 /usr/local/share/itss-dev/
+#}
+
+box_add_vagrant_to_staff_group() {
+  usermod -a -G staff vagrant
+}
+
+box_install_rocketeer() {
+  wget http://rocketeer.autopergamene.eu/versions/rocketeer.phar
+  chmod +x rocketeer.phar
+  mv rocketeer.phar /usr/local/bin/rocketeer
+}
+
+
 box_install_curl() {
     output $BLUE "Installing cURL..."
     apt-get -qq -y install curl
@@ -54,8 +70,8 @@ box_install_mariadb() {
 
 box_install_memcached() {
     output $BLUE "Installing Memcached..."
-    apt-get -qq -y install memcached php-memcached
-    service php7.0-fpm restart
+    apt-get -qq -y install memcached php5-memcached
+    service php5-fpm restart
     output $GREEN "Memcached installed."
 }
 
@@ -87,13 +103,13 @@ box_install_nginx() {
 
 box_install_php() {
     output $BLUE "Installing PHP..."
-    apt-get -qq -y install php-fpm php-cli php-curl php-gd php-json php-mcrypt \
-        php-mysql php-xml php-mbstring
-    sed -i "s/^user\s\=\swww\-data/user = ubuntu/g" /etc/php/7.0/fpm/pool.d/www.conf
-    sed -i "s/^group\s\=\swww\-data/group = ubuntu/g" /etc/php/7.0/fpm/pool.d/www.conf
-    cp /vagrant/vagrant/env/php/php.ini /etc/php/7.0/cli/php.ini
-    cp /vagrant/vagrant/env/php/php.ini /etc/php/7.0/fpm/php.ini
-    service php7.0-fpm restart
+    apt-get -qq -y install php5-fpm php5-cli php5-curl php5-gd php5-json php5-mcrypt \
+        php5-mysql php5-xmlrpc libapache2-mod-php5
+    sed -i "s/^user\s\=\swww\-data/user = www\-data/g" /etc/php5/fpm/pool.d/www.conf
+    sed -i "s/^group\s\=\swww\-data/group = www\-data/g" /etc/php5/fpm/pool.d/www.conf
+    cp /vagrant/vagrant/env/php/php.ini /etc/php5/cli/php.ini
+    cp /vagrant/vagrant/env/php/php.ini /etc/php5/fpm/php.ini
+    service php5-fpm restart
     output $GREEN "PHP installed and configured."
 }
 
@@ -119,14 +135,14 @@ box_install_zip() {
 
 # Make sure the box stores a hidden file to say when it was installed
 box_register() {
-    echo 'Box provisioned - `date`' > /home/ubuntu/.provisioned
+    echo 'Box provisioned - `date`' > /home/vagrant/.provisioned
 }
 
 # Update the box - common functionality
 box_update() {
 
     # Perform /etc/hosts fix
-    sed -i "s@localhost@localhost ubuntu-xenial@g" /etc/hosts
+    sed -i "s@localhost@localhost debian-jessie64@g" /etc/hosts
 
     output $BLUE "Updating apt-get sources..."
     apt-get -qq -y update
