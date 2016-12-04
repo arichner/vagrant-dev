@@ -31,4 +31,4 @@ and copy the resulting text to your clipboard.
 * click "settings"
 * click "SSH and GPG keys"
 * click "add key"
-* paste the text from above into 
+* paste the text from above into the text box and save
